@@ -19,20 +19,41 @@ extension Animation {
     }
 }
 
+enum InitializationError: Error {
+    case noDimensionFound
+    case noFileFound
+}
+
+enum BoardError: Error {
+    case invalidTileIndex
+}
+
 class BoardModel: ObservableObject {
     public var tiles:[BoardTile]
     
     // Key is the tile face value (number), value is position (index)
     private var tileLookup:[Int:Int]
+    
+    // slot is the empty tile
     public var slotIndex: Int = -1
-    public var dimension:Int = BoardConstants.boardSize
     
-    public var size:CGFloat {
-        return CGFloat(dimension) * BoardConstants.tileSize + CGFloat(dimension - 1) * BoardConstants.spacing
-    }
+    // dimension is the width/height of the puzzle board
+    public var dimension:Int
     
-    init() {
-        let count:Int = Int(pow(Double(BoardConstants.boardSize),2)) - 1
+    // size is the user inteface size, cumputed based on dimension
+    public var size:CGFloat = 0.0
+    
+    // A measure of how many tiles are out of place
+    private var hamming: Int = -1
+    
+    // Sum of distances between tiles and goal
+    private var manhattan: Int = -1
+    
+    // initialize a board of size dimension in its solved state
+    init(dimension: Int) {
+        self.dimension = dimension
+        self.size = CGFloat(dimension) * BoardConstants.tileSize + CGFloat(dimension - 1) * BoardConstants.spacing
+        let count:Int = Int(pow(Double(dimension),2)) - 1
         var t:[BoardTile] = []
         var l:[Int:Int] = [:]
         for i in 1...count{
@@ -43,12 +64,58 @@ class BoardModel: ObservableObject {
         self.slotIndex = count + 1
         self.tiles = t
         self.tileLookup = l
+        processTiles()
+    }
+    
+    // Initialize from a txt file
+    init(filename: String) throws {
+        guard let file = Bundle.main.path(forResource: filename, ofType: nil) else {
+            throw InitializationError.noFileFound
+        }
+        let contents = try String(contentsOf: URL(fileURLWithPath: file))
+        let lines = contents.components(separatedBy: CharacterSet.whitespacesAndNewlines)
+        var numbers:[Int] = lines.compactMap { char in
+            if char == "" {
+                return nil
+            }
+            return Int(char)
+        }
+        guard let dim = numbers.first else {
+            throw InitializationError.noDimensionFound
+        }
+        numbers.removeFirst()
+        
+        self.dimension = dim
+        
+        self.size = CGFloat(dimension) * BoardConstants.tileSize + CGFloat(dimension - 1) * BoardConstants.spacing
+        print("Dimension: \(self.dimension) -- Tiles: \(numbers)")
+        var t:[BoardTile] = []
+        var l:[Int:Int] = [:]
+        
+        for i in 1...numbers.count{
+            let number = numbers[i-1]
+            if number == 0 {
+                self.slotIndex = i
+            }else{
+                let tile = BoardTile(number: number)
+                t.append(tile)
+                l[number] = i
+            }
+        }
+        self.tiles = t
+        self.tileLookup = l
+        processTiles()
+        print("Hamming: \(hamming), Manhattan: \(manhattan)")
+    }
+    
+    func indexForTile(tile: BoardTile) -> Int {
+        return tileLookup[tile.number]!
     }
     
     func move(tile: BoardTile, block: (CGSize) -> Void) {
         if isSlideable(tile: tile) {
             if let idx = tileLookup[tile.number] {
-                let oldSlot = Board.offsetForTile(n: dimension, tile: slotIndex)
+                let oldSlot = Board.offsetForTile(n: dimension, positionIndex: slotIndex)
                 
                 // tile's index becomes the slot's index
                 tileLookup[tile.number] = slotIndex
@@ -74,6 +141,41 @@ class BoardModel: ObservableObject {
             }
         }
         return false;
+    }
+    
+    private func processTiles() {
+        var hamming = 0
+        var manhattan = 0
+        for tile in tiles {
+            if let manh = try? manhattanForTile(tile: tile) {
+                if manh > 0 {
+                    hamming += 1
+                }
+                manhattan += manh
+            }
+        }
+        self.hamming = hamming
+        self.manhattan = manhattan
+    }
+    
+    private func manhattanForTile(tile: BoardTile) throws -> Int {
+        guard let index = tileLookup[tile.number] else {
+            throw BoardError.invalidTileIndex
+        }
+        let col = (index - 1) % dimension
+        let row = (index - 1) / dimension
+        
+        let value = tile.number - 1
+        var finalCol = value % dimension
+        var finalRow:Int
+        if (finalCol == 0) {
+            finalRow = value / dimension;
+            finalCol = dimension;
+        } else {
+            finalRow = (value / dimension) + 1;
+        }
+        let manhattan = abs(finalRow - row) + abs(finalCol - col)
+        return manhattan
     }
 }
 
@@ -117,15 +219,15 @@ struct Board: View {
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
             ForEach(model.tiles, id: \.self) { tile in
-                BoardTileView(board: self, tile: tile, origin: Board.offsetForTile(n: model.dimension, tile: tile.number))
+                BoardTileView(board: self, tile: tile, origin: Board.offsetForTile(n: model.dimension, positionIndex: model.indexForTile(tile: tile)))
                     .background(Color.clear)
             }
         }
     }
     
-    static func offsetForTile(n: Int, tile: Int) -> CGSize {
-        let col = CGFloat((tile - 1) % n)
-        let row = CGFloat((tile - 1) / n)
+    static func offsetForTile(n: Int, positionIndex: Int) -> CGSize {
+        let col = CGFloat((positionIndex - 1) % n)
+        let row = CGFloat((positionIndex - 1) / n)
         return CGSize(width: col * BoardConstants.tileSize + (col - 1) * BoardConstants.spacing,
                       height: row * BoardConstants.tileSize + (row - 1) * BoardConstants.spacing)
     }
@@ -133,9 +235,9 @@ struct Board: View {
 }
 
 struct ContentView: View {
-    var boardModel = BoardModel()
+    var boardModel = try? BoardModel(filename: "3x3-01.txt")
     var body: some View {
-        Board(model: boardModel).frame(width: boardModel.size, height: boardModel.size, alignment: .topLeading)
+        Board(model: boardModel!).frame(width: boardModel!.size, height: boardModel!.size, alignment: .topLeading)
             .background(Color("Board"))
     }
 }

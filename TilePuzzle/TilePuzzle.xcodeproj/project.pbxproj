@@ -15,6 +15,14 @@
 		4211DB8827062BE8005CF49E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4211DB5D27062BE6005CF49E /* ContentView.swift */; };
 		4211DB8927062BE8005CF49E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4211DB5E27062BE8005CF49E /* Assets.xcassets */; };
 		4211DB8A27062BE8005CF49E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4211DB5E27062BE8005CF49E /* Assets.xcassets */; };
+		42C8FCCC2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
+		42C8FCCD2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
+		42C8FCCE2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
+		42C8FCCF2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
+		42C8FCD02708BA540033938E /* 4x4-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCB2708BA530033938E /* 4x4-01.txt */; };
+		42C8FCD12708BA540033938E /* 4x4-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCB2708BA530033938E /* 4x4-01.txt */; };
+		42C8FCD22708BA540033938E /* 4x4-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCB2708BA530033938E /* 4x4-01.txt */; };
+		42C8FCD32708BA540033938E /* 4x4-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCB2708BA530033938E /* 4x4-01.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +57,8 @@
 		4211DB7E27062BE8005CF49E /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4211DB8227062BE8005CF49E /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		4211DB8427062BE8005CF49E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42C8FCCA2708BA530033938E /* 3x3-01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "3x3-01.txt"; sourceTree = "<group>"; };
+		42C8FCCB2708BA530033938E /* 4x4-01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "4x4-01.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +108,7 @@
 		4211DB5B27062BE6005CF49E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				42C8FCBF2708B9450033938E /* Layouts */,
 				4211DB5C27062BE6005CF49E /* TilePuzzleApp.swift */,
 				4211DB5D27062BE6005CF49E /* ContentView.swift */,
 				4211DB5E27062BE8005CF49E /* Assets.xcassets */,
@@ -150,6 +161,15 @@
 			);
 			path = "Tests macOS";
 			sourceTree = "<group>";
+		};
+		42C8FCBF2708B9450033938E /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				42C8FCCA2708BA530033938E /* 3x3-01.txt */,
+				42C8FCCB2708BA530033938E /* 4x4-01.txt */,
+			);
+			path = Layouts;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -275,7 +295,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42C8FCCC2708BA540033938E /* 3x3-01.txt in Resources */,
 				4211DB8927062BE8005CF49E /* Assets.xcassets in Resources */,
+				42C8FCD02708BA540033938E /* 4x4-01.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,7 +305,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42C8FCCD2708BA540033938E /* 3x3-01.txt in Resources */,
 				4211DB8A27062BE8005CF49E /* Assets.xcassets in Resources */,
+				42C8FCD12708BA540033938E /* 4x4-01.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +315,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42C8FCCE2708BA540033938E /* 3x3-01.txt in Resources */,
+				42C8FCD22708BA540033938E /* 4x4-01.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +324,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42C8FCCF2708BA540033938E /* 3x3-01.txt in Resources */,
+				42C8FCD32708BA540033938E /* 4x4-01.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
