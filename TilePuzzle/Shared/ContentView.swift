@@ -46,7 +46,6 @@ class BoardModel: ObservableObject {
     }
     
     func move(tile: BoardTile, block: (CGSize) -> Void) {
-        print("\(tile.number) -> \(tileLookup[tile.number])")
         if isSlideable(tile: tile) {
             if let idx = tileLookup[tile.number] {
                 let oldSlot = Board.offsetForTile(n: dimension, tile: slotIndex)
