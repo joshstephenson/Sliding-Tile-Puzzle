@@ -9,8 +9,14 @@ import SwiftUI
 
 struct BoardConstants {
     static let tileSize:CGFloat = 70.0
-    static let boardSize = 4
+    static let boardSize = 3
     static let spacing:CGFloat = 2.0
+}
+
+extension Animation {
+    static func slide() -> Animation {
+        Animation.easeOut(duration: 0.1)
+    }
 }
 
 class BoardModel: ObservableObject {
@@ -19,7 +25,6 @@ class BoardModel: ObservableObject {
     // Key is the tile face value (number), value is position (index)
     private var tileLookup:[Int:Int]
     public var slotIndex: Int = -1
-    public var slot: CGSize
     public var dimension:Int = BoardConstants.boardSize
     
     public var size:CGFloat {
@@ -31,28 +36,35 @@ class BoardModel: ObservableObject {
         var t:[BoardTile] = []
         var l:[Int:Int] = [:]
         for i in 1...count{
-            let tile = BoardTile(number: i, offset: Board.offsetForTile(n: dimension, tile: i))
+            let tile = BoardTile(number: i)
             t.append(tile)
             l[i] = i
         }
         self.slotIndex = count + 1
-        self.slot = Board.offsetForTile(n: dimension, tile: count + 1)
         self.tiles = t
         self.tileLookup = l
     }
     
-    func move(tile: BoardTile) -> Int {
-        if let idx = tileLookup[tile.number] {
-            let old = slotIndex
-            tileLookup[tile.number] = slotIndex
-            slotIndex = idx
-            slot = Board.offsetForTile(n: dimension, tile: slotIndex)
-            return old
+    func move(tile: BoardTile, block: (CGSize) -> Void) {
+        print("\(tile.number) -> \(tileLookup[tile.number])")
+        if isSlideable(tile: tile) {
+            if let idx = tileLookup[tile.number] {
+                let oldSlot = Board.offsetForTile(n: dimension, tile: slotIndex)
+                
+                // tile's index becomes the slot's index
+                tileLookup[tile.number] = slotIndex
+                
+                // New slot index becomes the tile's index
+                slotIndex = idx
+                
+                // Let the view update itself
+                block(oldSlot)
+            }
         }
-        return -1
     }
     
-    func isSlideable(tile: BoardTile) -> Bool {
+    // We should only be able to slide tiles adjascent to empty slot
+    private func isSlideable(tile: BoardTile) -> Bool {
         if let tileIndex = tileLookup[tile.number] {
             // slot is in the same row with tile and adjascent
             if ((tileIndex - 1) / dimension == (slotIndex - 1) / dimension) && (abs(tileIndex - slotIndex) == 1) {
@@ -61,7 +73,6 @@ class BoardModel: ObservableObject {
             } else if abs(tileIndex - slotIndex) == dimension {
                 return true
             }
-//            print("foo: \(((tileIndex - 1) / dimension == (slotIndex - 1) / dimension)), modulo: \(tileIndex % dimension), slot modulo: \(slotIndex % dimension)")
         }
         return false;
     }
@@ -69,11 +80,9 @@ class BoardModel: ObservableObject {
 
 class BoardTile: NSObject {
     var number: Int
-    var origin: CGSize
     
-    init(number: Int, offset: CGSize) {
+    init(number: Int) {
         self.number = number
-        self.origin = offset
     }
 }
 
@@ -96,16 +105,11 @@ struct BoardTileView: View {
         InnerTile(number: tile.number)
             .offset(origin)
             .onTapGesture {
-                if board.model.isSlideable(tile: tile) {
-    //                let temp = tile.origin
-                    tile.origin = board.model.slot
-                    self.origin = tile.origin
-    //                board.boardModel.slot = temp
-                    let idx = board.model.move(tile: tile)
-    //                tile.origin = Board.offsetForTile(n: board.boardModel.dimension, tile: idx)
+                board.model.move(tile: tile) { origin in
+                    self.origin = origin
                 }
             }
-            .animation(.spring())
+            .animation(.slide())
     }
 }
 
@@ -114,7 +118,7 @@ struct Board: View {
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
             ForEach(model.tiles, id: \.self) { tile in
-                BoardTileView(board: self, tile: tile, origin: tile.origin)
+                BoardTileView(board: self, tile: tile, origin: Board.offsetForTile(n: model.dimension, tile: tile.number))
                     .background(Color.clear)
             }
         }
