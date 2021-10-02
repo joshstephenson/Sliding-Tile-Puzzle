@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct BoardConstants {
-    static let tileSize = 50;
-    static let boardSize = 3;
+    static let tileSize:CGFloat = 70.0
+    static let boardSize = 4
+    static let spacing:CGFloat = 2.0
 }
 
 class BoardModel: ObservableObject {
@@ -22,7 +23,7 @@ class BoardModel: ObservableObject {
     public var dimension:Int = BoardConstants.boardSize
     
     public var size:CGFloat {
-        return CGFloat(dimension) * CGFloat(BoardConstants.tileSize)
+        return CGFloat(dimension) * BoardConstants.tileSize + CGFloat(dimension - 1) * BoardConstants.spacing
     }
     
     init() {
@@ -76,22 +77,35 @@ class BoardTile: NSObject {
     }
 }
 
+struct InnerTile: View {
+    var number: Int
+    var body: some View {
+        Text("\(number)")
+            .font(.largeTitle)
+            .frame(width: CGFloat(BoardConstants.tileSize), height: CGFloat(BoardConstants.tileSize), alignment: .center)
+            .background(Color("Tile"))
+            .cornerRadius(5.0)
+    }
+}
+
 struct BoardTileView: View {
     var board: Board
     var tile: BoardTile
     @State var origin: CGSize
     var body: some View {
-        Button("\(tile.number)") {
-            if board.model.isSlideable(tile: tile) {
-//                let temp = tile.origin
-                tile.origin = board.model.slot
-                self.origin = tile.origin
-//                board.boardModel.slot = temp
-                let idx = board.model.move(tile: tile)
-//                tile.origin = Board.offsetForTile(n: board.boardModel.dimension, tile: idx)
+        InnerTile(number: tile.number)
+            .offset(origin)
+            .onTapGesture {
+                if board.model.isSlideable(tile: tile) {
+    //                let temp = tile.origin
+                    tile.origin = board.model.slot
+                    self.origin = tile.origin
+    //                board.boardModel.slot = temp
+                    let idx = board.model.move(tile: tile)
+    //                tile.origin = Board.offsetForTile(n: board.boardModel.dimension, tile: idx)
+                }
             }
-        }.offset(origin)
-        .animation(.spring())
+            .animation(.spring())
     }
 }
 
@@ -101,14 +115,16 @@ struct Board: View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
             ForEach(model.tiles, id: \.self) { tile in
                 BoardTileView(board: self, tile: tile, origin: tile.origin)
+                    .background(Color.clear)
             }
         }
     }
     
     static func offsetForTile(n: Int, tile: Int) -> CGSize {
-        let col = (tile - 1) % n
-        let row = (tile - 1) / n
-        return CGSize(width: col * BoardConstants.tileSize, height: row * BoardConstants.tileSize)
+        let col = CGFloat((tile - 1) % n)
+        let row = CGFloat((tile - 1) / n)
+        return CGSize(width: col * BoardConstants.tileSize + (col - 1) * BoardConstants.spacing,
+                      height: row * BoardConstants.tileSize + (row - 1) * BoardConstants.spacing)
     }
     
 }
@@ -117,6 +133,7 @@ struct ContentView: View {
     var boardModel = BoardModel()
     var body: some View {
         Board(model: boardModel).frame(width: boardModel.size, height: boardModel.size, alignment: .topLeading)
+            .background(Color("Board"))
     }
 }
 
