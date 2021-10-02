@@ -31,9 +31,6 @@ enum BoardError: Error {
 class BoardModel: ObservableObject {
     public var tiles:[BoardTile]
     
-    // Key is the tile face value (number), value is position (index)
-    private var tileLookup:[Int:Int]
-    
     // slot is the empty tile
     public var slotIndex: Int = -1
     
@@ -42,6 +39,14 @@ class BoardModel: ObservableObject {
     
     // size is the user inteface size, cumputed based on dimension
     public var size:CGFloat = 0.0
+    
+    // is Solved?
+    public var isSolved:Bool {
+        return manhattan == 0
+    }
+    
+    // Key is the tile face value (number), value is position (index)
+    private var tileLookup:[Int:Int]
     
     // A measure of how many tiles are out of place
     private var hamming: Int = -1
@@ -75,7 +80,7 @@ class BoardModel: ObservableObject {
         let contents = try String(contentsOf: URL(fileURLWithPath: file))
         let lines = contents.components(separatedBy: CharacterSet.whitespacesAndNewlines)
         var numbers:[Int] = lines.compactMap { char in
-            if char == "" {
+            if char.isEmpty {
                 return nil
             }
             return Int(char)
@@ -105,14 +110,13 @@ class BoardModel: ObservableObject {
         self.tiles = t
         self.tileLookup = l
         processTiles()
-        print("Hamming: \(hamming), Manhattan: \(manhattan)")
     }
     
     func indexForTile(tile: BoardTile) -> Int {
         return tileLookup[tile.number]!
     }
     
-    func move(tile: BoardTile, block: (CGSize) -> Void) {
+    func move(tile: BoardTile, block: (CGSize, Bool) -> Void) {
         if isSlideable(tile: tile) {
             if let idx = tileLookup[tile.number] {
                 let oldSlot = Board.offsetForTile(n: dimension, positionIndex: slotIndex)
@@ -123,8 +127,10 @@ class BoardModel: ObservableObject {
                 // New slot index becomes the tile's index
                 slotIndex = idx
                 
+                processTiles()
+                
                 // Let the view update itself
-                block(oldSlot)
+                block(oldSlot, isSolved)
             }
         }
     }
@@ -156,16 +162,16 @@ class BoardModel: ObservableObject {
         }
         self.hamming = hamming
         self.manhattan = manhattan
+        print("Hamming: \(hamming), Manhattan: \(manhattan)")
     }
     
     private func manhattanForTile(tile: BoardTile) throws -> Int {
         guard let index = tileLookup[tile.number] else {
             throw BoardError.invalidTileIndex
         }
-        let col = (index - 1) % dimension
-        let row = (index - 1) / dimension
-        
-        let value = tile.number - 1
+        let col = (index - 1) % dimension + 1
+        let row = (index - 1) / dimension + 1
+        let value = tile.number
         var finalCol = value % dimension
         var finalRow:Int
         if (finalCol == 0) {
@@ -175,6 +181,7 @@ class BoardModel: ObservableObject {
             finalRow = (value / dimension) + 1;
         }
         let manhattan = abs(finalRow - row) + abs(finalCol - col)
+//        print("\(tile.number), row: \(row), col: \(col), finalRow: \(finalRow), finalCol: \(finalCol), manh: \(manhattan)")
         return manhattan
     }
 }
@@ -206,8 +213,11 @@ struct BoardTileView: View {
         InnerTile(number: tile.number)
             .offset(origin)
             .onTapGesture {
-                board.model.move(tile: tile) { origin in
+                board.model.move(tile: tile) { origin, solved in
                     self.origin = origin
+                    if(solved) {
+                        print("SOLVED!")
+                    }
                 }
             }
             .animation(.slide())
