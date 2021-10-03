@@ -19,6 +19,10 @@
 		423218E42709F548002DAD63 /* BoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218E22709F548002DAD63 /* BoardModel.swift */; };
 		423218E52709F548002DAD63 /* BoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218E22709F548002DAD63 /* BoardModel.swift */; };
 		423218E62709F548002DAD63 /* BoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218E22709F548002DAD63 /* BoardModel.swift */; };
+		423218E82709F56A002DAD63 /* MinimumPQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218E72709F56A002DAD63 /* MinimumPQ.swift */; };
+		423218E92709F56A002DAD63 /* MinimumPQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218E72709F56A002DAD63 /* MinimumPQ.swift */; };
+		423218EA2709F56A002DAD63 /* MinimumPQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218E72709F56A002DAD63 /* MinimumPQ.swift */; };
+		423218EB2709F56A002DAD63 /* MinimumPQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218E72709F56A002DAD63 /* MinimumPQ.swift */; };
 		42C8FCCC2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
 		42C8FCCD2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
 		42C8FCCE2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
@@ -62,6 +66,7 @@
 		4211DB8227062BE8005CF49E /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		4211DB8427062BE8005CF49E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		423218E22709F548002DAD63 /* BoardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardModel.swift; sourceTree = "<group>"; };
+		423218E72709F56A002DAD63 /* MinimumPQ.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinimumPQ.swift; sourceTree = "<group>"; };
 		42C8FCCA2708BA530033938E /* 3x3-01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "3x3-01.txt"; sourceTree = "<group>"; };
 		42C8FCCB2708BA530033938E /* 4x4-01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "4x4-01.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,6 +123,7 @@
 				4211DB5D27062BE6005CF49E /* ContentView.swift */,
 				4211DB5E27062BE8005CF49E /* Assets.xcassets */,
 				423218E22709F548002DAD63 /* BoardModel.swift */,
+				423218E72709F56A002DAD63 /* MinimumPQ.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -345,6 +351,7 @@
 				423218E32709F548002DAD63 /* BoardModel.swift in Sources */,
 				4211DB8727062BE8005CF49E /* ContentView.swift in Sources */,
 				4211DB8527062BE8005CF49E /* TilePuzzleApp.swift in Sources */,
+				423218E82709F56A002DAD63 /* MinimumPQ.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +362,7 @@
 				423218E42709F548002DAD63 /* BoardModel.swift in Sources */,
 				4211DB8827062BE8005CF49E /* ContentView.swift in Sources */,
 				4211DB8627062BE8005CF49E /* TilePuzzleApp.swift in Sources */,
+				423218E92709F56A002DAD63 /* MinimumPQ.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +370,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423218EA2709F56A002DAD63 /* MinimumPQ.swift in Sources */,
 				423218E52709F548002DAD63 /* BoardModel.swift in Sources */,
 				4211DB7827062BE8005CF49E /* Tests_iOS.swift in Sources */,
 			);
@@ -371,6 +380,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423218EB2709F56A002DAD63 /* MinimumPQ.swift in Sources */,
 				423218E62709F548002DAD63 /* BoardModel.swift in Sources */,
 				4211DB8327062BE8005CF49E /* Tests_macOS.swift in Sources */,
 			);
