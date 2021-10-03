@@ -23,6 +23,24 @@
 		423218E92709F56A002DAD63 /* MinimumPQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218E72709F56A002DAD63 /* MinimumPQ.swift */; };
 		423218EA2709F56A002DAD63 /* MinimumPQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218E72709F56A002DAD63 /* MinimumPQ.swift */; };
 		423218EB2709F56A002DAD63 /* MinimumPQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218E72709F56A002DAD63 /* MinimumPQ.swift */; };
+		423218ED2709F57C002DAD63 /* Solver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218EC2709F57C002DAD63 /* Solver.swift */; };
+		423218EE2709F57C002DAD63 /* Solver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218EC2709F57C002DAD63 /* Solver.swift */; };
+		423218EF2709F57C002DAD63 /* Solver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218EC2709F57C002DAD63 /* Solver.swift */; };
+		423218F02709F57C002DAD63 /* Solver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218EC2709F57C002DAD63 /* Solver.swift */; };
+		423218F22709F5A8002DAD63 /* SolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218F12709F5A8002DAD63 /* SolverTests.swift */; };
+		423218F32709F5A8002DAD63 /* SolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218F12709F5A8002DAD63 /* SolverTests.swift */; };
+		423218F52709F6F7002DAD63 /* BoardConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218F42709F6F7002DAD63 /* BoardConstants.swift */; };
+		423218F62709F6F7002DAD63 /* BoardConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218F42709F6F7002DAD63 /* BoardConstants.swift */; };
+		423218F72709F6F7002DAD63 /* BoardConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218F42709F6F7002DAD63 /* BoardConstants.swift */; };
+		423218F82709F6F7002DAD63 /* BoardConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218F42709F6F7002DAD63 /* BoardConstants.swift */; };
+		423218FA2709F70C002DAD63 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218F92709F70C002DAD63 /* Errors.swift */; };
+		423218FB2709F70C002DAD63 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218F92709F70C002DAD63 /* Errors.swift */; };
+		423218FC2709F70C002DAD63 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218F92709F70C002DAD63 /* Errors.swift */; };
+		423218FD2709F70C002DAD63 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218F92709F70C002DAD63 /* Errors.swift */; };
+		423218FF2709F729002DAD63 /* BoardTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218FE2709F729002DAD63 /* BoardTile.swift */; };
+		423219002709F729002DAD63 /* BoardTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218FE2709F729002DAD63 /* BoardTile.swift */; };
+		423219012709F729002DAD63 /* BoardTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218FE2709F729002DAD63 /* BoardTile.swift */; };
+		423219022709F729002DAD63 /* BoardTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423218FE2709F729002DAD63 /* BoardTile.swift */; };
 		42C8FCCC2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
 		42C8FCCD2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
 		42C8FCCE2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
@@ -67,6 +85,11 @@
 		4211DB8427062BE8005CF49E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		423218E22709F548002DAD63 /* BoardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardModel.swift; sourceTree = "<group>"; };
 		423218E72709F56A002DAD63 /* MinimumPQ.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinimumPQ.swift; sourceTree = "<group>"; };
+		423218EC2709F57C002DAD63 /* Solver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solver.swift; sourceTree = "<group>"; };
+		423218F12709F5A8002DAD63 /* SolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolverTests.swift; sourceTree = "<group>"; };
+		423218F42709F6F7002DAD63 /* BoardConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardConstants.swift; sourceTree = "<group>"; };
+		423218F92709F70C002DAD63 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		423218FE2709F729002DAD63 /* BoardTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTile.swift; sourceTree = "<group>"; };
 		42C8FCCA2708BA530033938E /* 3x3-01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "3x3-01.txt"; sourceTree = "<group>"; };
 		42C8FCCB2708BA530033938E /* 4x4-01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "4x4-01.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -124,6 +147,10 @@
 				4211DB5E27062BE8005CF49E /* Assets.xcassets */,
 				423218E22709F548002DAD63 /* BoardModel.swift */,
 				423218E72709F56A002DAD63 /* MinimumPQ.swift */,
+				423218EC2709F57C002DAD63 /* Solver.swift */,
+				423218F42709F6F7002DAD63 /* BoardConstants.swift */,
+				423218F92709F70C002DAD63 /* Errors.swift */,
+				423218FE2709F729002DAD63 /* BoardTile.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -170,6 +197,7 @@
 			children = (
 				4211DB8227062BE8005CF49E /* Tests_macOS.swift */,
 				4211DB8427062BE8005CF49E /* Info.plist */,
+				423218F12709F5A8002DAD63 /* SolverTests.swift */,
 			);
 			path = "Tests macOS";
 			sourceTree = "<group>";
@@ -348,10 +376,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423218FF2709F729002DAD63 /* BoardTile.swift in Sources */,
+				423218F52709F6F7002DAD63 /* BoardConstants.swift in Sources */,
+				423218ED2709F57C002DAD63 /* Solver.swift in Sources */,
 				423218E32709F548002DAD63 /* BoardModel.swift in Sources */,
 				4211DB8727062BE8005CF49E /* ContentView.swift in Sources */,
 				4211DB8527062BE8005CF49E /* TilePuzzleApp.swift in Sources */,
 				423218E82709F56A002DAD63 /* MinimumPQ.swift in Sources */,
+				423218FA2709F70C002DAD63 /* Errors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,10 +391,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423219002709F729002DAD63 /* BoardTile.swift in Sources */,
+				423218F62709F6F7002DAD63 /* BoardConstants.swift in Sources */,
+				423218EE2709F57C002DAD63 /* Solver.swift in Sources */,
 				423218E42709F548002DAD63 /* BoardModel.swift in Sources */,
 				4211DB8827062BE8005CF49E /* ContentView.swift in Sources */,
 				4211DB8627062BE8005CF49E /* TilePuzzleApp.swift in Sources */,
 				423218E92709F56A002DAD63 /* MinimumPQ.swift in Sources */,
+				423218FB2709F70C002DAD63 /* Errors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,9 +406,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423219012709F729002DAD63 /* BoardTile.swift in Sources */,
+				423218F72709F6F7002DAD63 /* BoardConstants.swift in Sources */,
 				423218EA2709F56A002DAD63 /* MinimumPQ.swift in Sources */,
 				423218E52709F548002DAD63 /* BoardModel.swift in Sources */,
+				423218F22709F5A8002DAD63 /* SolverTests.swift in Sources */,
+				423218EF2709F57C002DAD63 /* Solver.swift in Sources */,
 				4211DB7827062BE8005CF49E /* Tests_iOS.swift in Sources */,
+				423218FC2709F70C002DAD63 /* Errors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,9 +421,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423219022709F729002DAD63 /* BoardTile.swift in Sources */,
+				423218F82709F6F7002DAD63 /* BoardConstants.swift in Sources */,
 				423218EB2709F56A002DAD63 /* MinimumPQ.swift in Sources */,
 				423218E62709F548002DAD63 /* BoardModel.swift in Sources */,
+				423218F32709F5A8002DAD63 /* SolverTests.swift in Sources */,
+				423218F02709F57C002DAD63 /* Solver.swift in Sources */,
 				4211DB8327062BE8005CF49E /* Tests_macOS.swift in Sources */,
+				423218FD2709F70C002DAD63 /* Errors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

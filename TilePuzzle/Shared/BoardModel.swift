@@ -91,11 +91,11 @@ class BoardModel: ObservableObject {
         processTiles()
     }
     
-    func move(tile: BoardTile, block: (CGSize, Bool) -> Void) {
+    func move(tile: BoardTile, block: (Int, Bool) -> Void) {
         if isSlideable(tile: tile) {
-            let oldPosition = tile.position
-            let oldSlot = Board.offsetForPosition(n: dimension, position: slotPosition)
-            let oldManhattan = tile.manhattan
+            let oldPosition     = tile.position
+            let oldManhattan    = tile.manhattan
+            let oldSlot         = slotPosition
             
             // tile's position becomes the slot's
             tile.position = slotPosition
