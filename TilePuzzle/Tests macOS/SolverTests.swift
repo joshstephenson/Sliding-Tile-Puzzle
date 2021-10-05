@@ -16,17 +16,23 @@ class SolverTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        let board = try! BoardModel(filename: "3x3-01.txt")
+    func testSolverFindsMostSimpleSolution() throws {
+        let contents = """
+            3
+             1  2  3
+             4  5  6
+             7  0  8
+            """
+        let board = try Board(contents: contents)
         let solver = Solver(board)
-        XCTAssert(solver.moves() == 5)
+        XCTAssertEqual(solver.moves(), 1)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+//    func testPerformanceExample() throws {
+//        // This is an example of a performance test case.
+//        self.measure {
+//            // Put the code you want to measure the time of here.
+//        }
+//    }
 
 }

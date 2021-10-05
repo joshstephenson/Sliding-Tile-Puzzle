@@ -25,15 +25,15 @@ struct InnerTile: View {
 }
 
 struct BoardTileView: View {
-    var board: Board
-    var tile: BoardTile
+    var board: BoardView
+    var tile: Board.Tile
     @State var origin: CGSize
     var body: some View {
         InnerTile(number: tile.number)
             .offset(origin)
             .onTapGesture {
                 board.model.move(tile: tile) { position, solved in
-                    self.origin = Board.offsetForPosition(n: board.model.dimension, position: position)
+                    self.origin = BoardView.offsetForPosition(n: board.model.dimension, position: position)
                     if(solved) {
                         print("SOLVED!")
                     }
@@ -43,12 +43,12 @@ struct BoardTileView: View {
     }
 }
 
-struct Board: View {
-    public var model: BoardModel
+struct BoardView: View {
+    public var model: Board
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
             ForEach(model.tiles, id: \.self) { tile in
-                BoardTileView(board: self, tile: tile, origin: Board.offsetForPosition(n: model.dimension, position: tile.position))
+                BoardTileView(board: self, tile: tile, origin: BoardView.offsetForPosition(n: model.dimension, position: tile.position))
                     .background(Color.clear)
             }
         }
@@ -64,15 +64,23 @@ struct Board: View {
 }
 
 struct ContentView: View {
-    var boardModel = try? BoardModel(filename: "3x3-01.txt")
+    var boardModel = try? Board(filename: "3x3-01.txt")
+    @State var solveIt = true
     var body: some View {
+       
         VStack(alignment: .center, spacing: 5.0) {
+            Button("Solve") {
+                let solver = Solver(boardModel!)
+                print("moves: \(solver.moves())")
+            }
+            
 //            Rectangle()
 //                .frame(maxWidth: .infinity)
 //                .frame(height: 20.0)
 //                .background(Color.clear)
-            Board(model: boardModel!).frame(width: boardModel!.size, height: boardModel!.size, alignment: .topLeading)
+            BoardView(model: boardModel!).frame(width: CGFloat(boardModel!.dimension) * BoardConstants.tileSize + CGFloat(boardModel!.dimension - 1) * BoardConstants.spacing, height: CGFloat(boardModel!.dimension) * BoardConstants.tileSize + CGFloat(boardModel!.dimension - 1) * BoardConstants.spacing, alignment: .topLeading)
                 .background(Color("Board"))
+            
         }
     }
     
