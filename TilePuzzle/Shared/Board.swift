@@ -86,11 +86,15 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
     init(dimension: Int, tiles: [Tile], slotPosition: Int) {
         self.slotPosition = slotPosition
         self.dimension = dimension
-        self.tiles = Array(tiles)
+        var t:[Tile] = []
         var l:[Int:Tile] = [:]
         for tile in tiles{
-            l[tile.position] = tile
+            // need to duplicate the tiles to not collide with other boards
+            let newTile = Tile(board: self, number: tile.number, position: tile.position)
+            l[newTile.position] = newTile
+            t.append(newTile)
         }
+        self.tiles = t
         self.tileLookup = l
         processTiles()
     }
@@ -139,8 +143,8 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         processTiles()
     }
     
-    func move(tile: Tile, block: ((Int, Bool) -> Void)? = nil) {
-        if isSlideable(tile: tile) {
+    func move(position: Int, block: ((Int, Bool) -> Void)? = nil) {
+        if let tile = tileLookup[position], isSlideable(tile: tile) {
             let oldPosition     = tile.position
             let oldManhattan    = tile.manhattan
             let oldSlot         = slotPosition
@@ -216,9 +220,8 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
     }
     
     private func duplicateAfterSliding(_ tile: Tile) -> Board {
-        let swap = tiles
-        let b = Board(dimension: dimension, tiles: swap, slotPosition: slotPosition)
-        b.move(tile: tile, block: nil)
+        let b = Board(dimension: dimension, tiles: tiles, slotPosition: slotPosition)
+        b.move(position: tile.position, block: nil)
         return b
     }
     
