@@ -27,6 +27,44 @@ class SolverTests: XCTestCase {
         let solver = Solver(board)
         XCTAssertEqual(solver.moves(), 1)
     }
+    
+    func testSolverFindsMoreComplicatedSolution() throws {
+        let contents = """
+            3
+             1  2  0
+             4  8  3
+             7  6  5
+            """
+        let board = try Board(contents: contents)
+        let solver = Solver(board)
+        XCTAssertEqual(solver.moves(), 6)
+    }
+    
+    func testSolverFindsSimpleFourByFourSolution() throws {
+        let contents = """
+        4
+         1  6  2  4
+         5  0  3  8
+         9 10  7 11
+        13 14 15 12
+"""
+        let board = try Board(contents: contents)
+        let solver = Solver(board)
+        XCTAssertEqual(solver.moves(), 6)
+    }
+    
+    func testSolverFindsMoreComplicatedFourByFourSolution() throws {
+        let contents = """
+       4
+        2  5  4  8
+        1  7 10  3
+       14  6  0 11
+        9 13 15 12
+"""
+        let board = try Board(contents: contents)
+        let solver = Solver(board)
+        XCTAssertEqual(solver.moves(), 18)
+    }
 
 //    func testPerformanceExample() throws {
 //        // This is an example of a performance test case.

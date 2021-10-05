@@ -41,6 +41,10 @@
 		4232190B270A9417002DAD63 /* BoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42321909270A9417002DAD63 /* BoardTests.swift */; };
 		4232190D270B80CF002DAD63 /* MinimumPriorityQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4232190C270B80CF002DAD63 /* MinimumPriorityQueueTests.swift */; };
 		4232190E270B80CF002DAD63 /* MinimumPriorityQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4232190C270B80CF002DAD63 /* MinimumPriorityQueueTests.swift */; };
+		42321910270CD39A002DAD63 /* 4x4-02.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4232190F270CD399002DAD63 /* 4x4-02.txt */; };
+		42321911270CD39A002DAD63 /* 4x4-02.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4232190F270CD399002DAD63 /* 4x4-02.txt */; };
+		42321912270CD39A002DAD63 /* 4x4-02.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4232190F270CD399002DAD63 /* 4x4-02.txt */; };
+		42321913270CD39A002DAD63 /* 4x4-02.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4232190F270CD399002DAD63 /* 4x4-02.txt */; };
 		42C8FCCC2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
 		42C8FCCD2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
 		42C8FCCE2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
@@ -91,6 +95,7 @@
 		423218F92709F70C002DAD63 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		42321909270A9417002DAD63 /* BoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTests.swift; sourceTree = "<group>"; };
 		4232190C270B80CF002DAD63 /* MinimumPriorityQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimumPriorityQueueTests.swift; sourceTree = "<group>"; };
+		4232190F270CD399002DAD63 /* 4x4-02.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "4x4-02.txt"; sourceTree = "<group>"; };
 		42C8FCCA2708BA530033938E /* 3x3-01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "3x3-01.txt"; sourceTree = "<group>"; };
 		42C8FCCB2708BA530033938E /* 4x4-01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "4x4-01.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -209,6 +214,7 @@
 			children = (
 				42C8FCCA2708BA530033938E /* 3x3-01.txt */,
 				42C8FCCB2708BA530033938E /* 4x4-01.txt */,
+				4232190F270CD399002DAD63 /* 4x4-02.txt */,
 			);
 			path = Layouts;
 			sourceTree = SOURCE_ROOT;
@@ -340,6 +346,7 @@
 				42C8FCCC2708BA540033938E /* 3x3-01.txt in Resources */,
 				4211DB8927062BE8005CF49E /* Assets.xcassets in Resources */,
 				42C8FCD02708BA540033938E /* 4x4-01.txt in Resources */,
+				42321910270CD39A002DAD63 /* 4x4-02.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +357,7 @@
 				42C8FCCD2708BA540033938E /* 3x3-01.txt in Resources */,
 				4211DB8A27062BE8005CF49E /* Assets.xcassets in Resources */,
 				42C8FCD12708BA540033938E /* 4x4-01.txt in Resources */,
+				42321911270CD39A002DAD63 /* 4x4-02.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +367,7 @@
 			files = (
 				42C8FCCE2708BA540033938E /* 3x3-01.txt in Resources */,
 				42C8FCD22708BA540033938E /* 4x4-01.txt in Resources */,
+				42321912270CD39A002DAD63 /* 4x4-02.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +377,7 @@
 			files = (
 				42C8FCCF2708BA540033938E /* 3x3-01.txt in Resources */,
 				42C8FCD32708BA540033938E /* 4x4-01.txt in Resources */,
+				42321913270CD39A002DAD63 /* 4x4-02.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
