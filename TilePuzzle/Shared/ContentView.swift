@@ -32,7 +32,7 @@ struct BoardTileView: View {
         InnerTile(number: tile.number)
             .offset(origin)
             .onTapGesture {
-                board.model.move(tile: tile) { position, solved in
+                board.model.move(position: tile.position) { position, solved in
                     self.origin = BoardView.offsetForPosition(n: board.model.dimension, position: position)
                     if(solved) {
                         print("SOLVED!")
