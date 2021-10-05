@@ -47,22 +47,18 @@ struct Solver {
     
     init(_ initial: Board) {
         var pq = MinimumPriorityQueue<SearchNode>()
-        print(initial)
         // TwinPQ is used to determine if a board can be solved
         // If a twin board can be solved then the initial (non-twin) cannot be
-//        var twinPQ = MinimumPriorityQueue<SearchNode>()
+        var twinPQ = MinimumPriorityQueue<SearchNode>()
         
         pq.insert(SearchNode(board: initial, moves: 0, previous: nil))
-        
-        
-//        twinPQ.insert(SearchNode(board: initial.twin(), moves: 0, previous: nil))
+        twinPQ.insert(SearchNode(board: initial.twin(), moves: 0, previous: nil))
 
-        while((!pq.isEmpty() && !pq.min()!.isSolved)) {// && (!twinPQ.isEmpty() && !twinPQ.min()!.isSolved)) {
+        while((!pq.isEmpty() && !pq.min()!.isSolved) && (!twinPQ.isEmpty() && !twinPQ.min()!.isSolved)) {
             if let node = pq.delMin() {
                 for neighbor in node.board.neighbors() {
                     // we need to ignore neighbors that are the previous layout
                     if node.previous == nil || neighbor != node.previous!.board {
-                        print(neighbor)
                         let newNode = SearchNode(board: neighbor, moves: node.moves + 1, previous: node)
                         pq.insert(newNode)
                     }
@@ -70,14 +66,14 @@ struct Solver {
             }
             
             // Now do the same for the twin PQ
-//            if let node = twinPQ.delMin() {
-//                for neighbor in node.board.neighbors() {
-//                    if node.previous == nil || node.previous!.board != neighbor {
-//                        let newNode = SearchNode(board: neighbor, moves: node.moves + 1, previous: node)
-//                        twinPQ.insert(newNode)
-//                    }
-//                }
-//            }
+            if let node = twinPQ.delMin() {
+                for neighbor in node.board.neighbors() {
+                    if node.previous == nil || neighbor != node.previous!.board {
+                        let newNode = SearchNode(board: neighbor, moves: node.moves + 1, previous: node)
+                        twinPQ.insert(newNode)
+                    }
+                }
+            }
         }
         
         if let node = pq.delMin() {
@@ -101,6 +97,10 @@ struct Solver {
         } else {
             print("empty PQ")
         }
+    }
+    
+    public func solution() -> [Board] {
+        return boards
     }
     
     public func moves() -> Int {

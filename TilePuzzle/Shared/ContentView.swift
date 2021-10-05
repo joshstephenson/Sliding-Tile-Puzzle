@@ -64,7 +64,7 @@ struct BoardView: View {
 }
 
 struct ContentView: View {
-    var boardModel = try? Board(filename: "4x4-02.txt")
+    var boardModel = try? Board(filename: "3x3-unsolvable.txt")
     @State var solveIt = true
     var body: some View {
        
@@ -75,8 +75,7 @@ struct ContentView: View {
             }
             
             BoardView(model: boardModel!).frame(width: CGFloat(boardModel!.dimension) * BoardConstants.tileSize + CGFloat(boardModel!.dimension - 1) * BoardConstants.spacing, height: CGFloat(boardModel!.dimension) * BoardConstants.tileSize + CGFloat(boardModel!.dimension - 1) * BoardConstants.spacing, alignment: .topLeading)
-                .background(Color("Board"))
-            
+                .background(Color("Board"))   
         }
     }
     

@@ -45,6 +45,14 @@
 		42321911270CD39A002DAD63 /* 4x4-02.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4232190F270CD399002DAD63 /* 4x4-02.txt */; };
 		42321912270CD39A002DAD63 /* 4x4-02.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4232190F270CD399002DAD63 /* 4x4-02.txt */; };
 		42321913270CD39A002DAD63 /* 4x4-02.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4232190F270CD399002DAD63 /* 4x4-02.txt */; };
+		42321916270CD494002DAD63 /* 4x4-unsolvable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42321914270CD494002DAD63 /* 4x4-unsolvable.txt */; };
+		42321917270CD494002DAD63 /* 4x4-unsolvable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42321914270CD494002DAD63 /* 4x4-unsolvable.txt */; };
+		42321918270CD494002DAD63 /* 4x4-unsolvable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42321914270CD494002DAD63 /* 4x4-unsolvable.txt */; };
+		42321919270CD494002DAD63 /* 4x4-unsolvable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42321914270CD494002DAD63 /* 4x4-unsolvable.txt */; };
+		4232191A270CD494002DAD63 /* 3x3-unsolvable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42321915270CD494002DAD63 /* 3x3-unsolvable.txt */; };
+		4232191B270CD494002DAD63 /* 3x3-unsolvable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42321915270CD494002DAD63 /* 3x3-unsolvable.txt */; };
+		4232191C270CD494002DAD63 /* 3x3-unsolvable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42321915270CD494002DAD63 /* 3x3-unsolvable.txt */; };
+		4232191D270CD494002DAD63 /* 3x3-unsolvable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42321915270CD494002DAD63 /* 3x3-unsolvable.txt */; };
 		42C8FCCC2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
 		42C8FCCD2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
 		42C8FCCE2708BA540033938E /* 3x3-01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FCCA2708BA530033938E /* 3x3-01.txt */; };
@@ -96,6 +104,8 @@
 		42321909270A9417002DAD63 /* BoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTests.swift; sourceTree = "<group>"; };
 		4232190C270B80CF002DAD63 /* MinimumPriorityQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimumPriorityQueueTests.swift; sourceTree = "<group>"; };
 		4232190F270CD399002DAD63 /* 4x4-02.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "4x4-02.txt"; sourceTree = "<group>"; };
+		42321914270CD494002DAD63 /* 4x4-unsolvable.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "4x4-unsolvable.txt"; sourceTree = "<group>"; };
+		42321915270CD494002DAD63 /* 3x3-unsolvable.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "3x3-unsolvable.txt"; sourceTree = "<group>"; };
 		42C8FCCA2708BA530033938E /* 3x3-01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "3x3-01.txt"; sourceTree = "<group>"; };
 		42C8FCCB2708BA530033938E /* 4x4-01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "4x4-01.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -215,6 +225,8 @@
 				42C8FCCA2708BA530033938E /* 3x3-01.txt */,
 				42C8FCCB2708BA530033938E /* 4x4-01.txt */,
 				4232190F270CD399002DAD63 /* 4x4-02.txt */,
+				42321915270CD494002DAD63 /* 3x3-unsolvable.txt */,
+				42321914270CD494002DAD63 /* 4x4-unsolvable.txt */,
 			);
 			path = Layouts;
 			sourceTree = SOURCE_ROOT;
@@ -344,6 +356,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				42C8FCCC2708BA540033938E /* 3x3-01.txt in Resources */,
+				42321916270CD494002DAD63 /* 4x4-unsolvable.txt in Resources */,
+				4232191A270CD494002DAD63 /* 3x3-unsolvable.txt in Resources */,
 				4211DB8927062BE8005CF49E /* Assets.xcassets in Resources */,
 				42C8FCD02708BA540033938E /* 4x4-01.txt in Resources */,
 				42321910270CD39A002DAD63 /* 4x4-02.txt in Resources */,
@@ -355,6 +369,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				42C8FCCD2708BA540033938E /* 3x3-01.txt in Resources */,
+				42321917270CD494002DAD63 /* 4x4-unsolvable.txt in Resources */,
+				4232191B270CD494002DAD63 /* 3x3-unsolvable.txt in Resources */,
 				4211DB8A27062BE8005CF49E /* Assets.xcassets in Resources */,
 				42C8FCD12708BA540033938E /* 4x4-01.txt in Resources */,
 				42321911270CD39A002DAD63 /* 4x4-02.txt in Resources */,
@@ -365,7 +381,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42321918270CD494002DAD63 /* 4x4-unsolvable.txt in Resources */,
 				42C8FCCE2708BA540033938E /* 3x3-01.txt in Resources */,
+				4232191C270CD494002DAD63 /* 3x3-unsolvable.txt in Resources */,
 				42C8FCD22708BA540033938E /* 4x4-01.txt in Resources */,
 				42321912270CD39A002DAD63 /* 4x4-02.txt in Resources */,
 			);
@@ -375,7 +393,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42321919270CD494002DAD63 /* 4x4-unsolvable.txt in Resources */,
 				42C8FCCF2708BA540033938E /* 3x3-01.txt in Resources */,
+				4232191D270CD494002DAD63 /* 3x3-unsolvable.txt in Resources */,
 				42C8FCD32708BA540033938E /* 4x4-01.txt in Resources */,
 				42321913270CD39A002DAD63 /* 4x4-02.txt in Resources */,
 			);

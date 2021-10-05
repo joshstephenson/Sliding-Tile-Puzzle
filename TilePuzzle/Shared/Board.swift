@@ -62,7 +62,6 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
                 count = 0
             }
         }
-        print(string)
         return string
     }
     
@@ -73,7 +72,7 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         var t:[Tile] = []
         var l:[Int:Tile] = [:]
         for i in 1...count{
-            let tile = Tile(board: self, number: i, position: i)
+            let tile = Tile(dimension: dimension, number: i, position: i)
             t.append(tile)
             l[i] = tile
         }
@@ -90,7 +89,7 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         var l:[Int:Tile] = [:]
         for tile in tiles{
             // need to duplicate the tiles to not collide with other boards
-            let newTile = Tile(board: self, number: tile.number, position: tile.position)
+            let newTile = Tile(dimension: dimension, number: tile.number, position: tile.position)
             l[newTile.position] = newTile
             t.append(newTile)
         }
@@ -133,7 +132,7 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
             if number == 0 {
                 self.slotPosition = i
             }else{
-                let tile = Tile(board: self, number: number, position: i)
+                let tile = Tile(dimension: dimension, number: number, position: i)
                 t.append(tile)
                 l[i] = tile
             }
@@ -204,11 +203,20 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
     // swap any two tiles (non-slot tiles)
     // Only a board OR its twin is solvable, not both
     func twin() -> Board {
-        var swap:[Tile] = tiles
+        var swap:[Tile] = []
+        
+        // deepcopy
+        for tile in tiles {
+            swap.append(Tile(dimension: tile.dimension, number: tile.number, position: tile.position))
+        }
         let swapFrom:Tile = swap.first!
         let swapTo:Tile = swap.last!
+        let oldPosition = swapFrom.position
         swapFrom.position = swapTo.position
-        swapTo.position = swapFrom.position
+        swapTo.position = oldPosition
+        assert(swapFrom.position != swapTo.position)
+        assert(swapFrom.position != slotPosition)
+        assert(swapTo.position != slotPosition)
         let fromIndex = swap.firstIndex(of: swapFrom)!
         let toIndex = swap.firstIndex(of: swapTo)!
         swap.swapAt(fromIndex, toIndex)
@@ -253,7 +261,7 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
     
     
     class Tile: NSObject {
-        var board: Board
+        var dimension: Int
         var number: Int
         var col: Int = -1
         var row: Int = -1
@@ -263,9 +271,12 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
                 updateCalculatedAttributes()
             }
         }
+        public override var description: String {
+            return "<Tile number: \(number), position: \(position)>"
+        }
         
-        init(board: Board, number: Int, position: Int) {
-            self.board = board
+        init(dimension: Int, number: Int, position: Int) {
+            self.dimension = dimension
             self.number = number
             self.position = position
             super.init()
@@ -273,19 +284,19 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         }
         
         private func updateCalculatedAttributes() {
-            self.col = (position - 1) % board.dimension + 1
-            self.row = (position - 1) / board.dimension + 1
+            self.col = (position - 1) % dimension + 1
+            self.row = (position - 1) / dimension + 1
             self.manhattan = calculateManhattan()
         }
         
         private func calculateManhattan() -> Int {
-            var finalCol = number % board.dimension
+            var finalCol = number % dimension
             var finalRow:Int
             if (finalCol == 0) {
-                finalRow = number / board.dimension;
-                finalCol = board.dimension;
+                finalRow = number / dimension;
+                finalCol = dimension;
             } else {
-                finalRow = (number / board.dimension) + 1;
+                finalRow = (number / dimension) + 1;
             }
             let manhattan = abs(finalRow - row) + abs(finalCol - col)
     //        print("\(number), row: \(row), col: \(col), finalRow: \(finalRow), finalCol: \(finalCol), manh: \(manhattan)")
