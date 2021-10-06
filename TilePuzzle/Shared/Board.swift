@@ -210,16 +210,11 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
             swap.append(Tile(dimension: tile.dimension, number: tile.number, position: tile.position))
         }
         let swapFrom:Tile = swap.first!
-        let swapTo:Tile = swap.last!
+        let swapTo:Tile = swap[dimension]
         let oldPosition = swapFrom.position
         swapFrom.position = swapTo.position
         swapTo.position = oldPosition
-        assert(swapFrom.position != swapTo.position)
-        assert(swapFrom.position != slotPosition)
-        assert(swapTo.position != slotPosition)
-        let fromIndex = swap.firstIndex(of: swapFrom)!
-        let toIndex = swap.firstIndex(of: swapTo)!
-        swap.swapAt(fromIndex, toIndex)
+        swap.swapAt(0, dimension-1)
         return Board(dimension: dimension, tiles: swap, slotPosition: slotPosition)
     }
     
