@@ -65,6 +65,19 @@ class SolverTests: XCTestCase {
         let solver = Solver(board)
         XCTAssertEqual(solver.moves(), 18)
     }
+    
+    func testSolverReturnsPositionsToSolve() throws {
+        let contents = """
+            3
+             1  2  0
+             4  8  3
+             7  6  5
+            """
+        let board = try Board(contents: contents)
+        let solver = Solver(board)
+        XCTAssertEqual(solver.solution().count, 6)
+        XCTAssertEqual(solver.solution(), [6,9,8,5,6,9])
+    }
    
     func testVerifiesThreeByThreeBoardIsUnsolvable() throws {
         let contents = """

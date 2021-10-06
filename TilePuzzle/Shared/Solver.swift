@@ -45,6 +45,7 @@ class SearchNode: Comparable, Equatable, CustomStringConvertible {
 
 struct Solver {
     private var boards:[Board] = []
+    private var steps:[Int] = []
     private var isSolvable = false
     
     init(_ initial: Board) {
@@ -88,10 +89,14 @@ struct Solver {
                 // the steps to solve
                 var goalNode = node
                 self.boards = []
+                self.steps = []
                 isSolvable = true
                 while (goalNode.previous != nil) {
                     let previous = goalNode.previous!
                     boards.append(goalNode.board)
+                    if let position = goalNode.movedPosition {
+                        steps.insert(position, at: 0)
+                    }
                     goalNode = previous
                 }
                 boards.append(initial)
@@ -103,8 +108,8 @@ struct Solver {
         }
     }
     
-    public func solution() -> [Board] {
-        return boards
+    public func solution() -> [Int] {
+        return steps
     }
     
     public func moves() -> Int {
