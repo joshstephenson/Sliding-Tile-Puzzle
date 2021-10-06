@@ -62,7 +62,7 @@ struct Solver {
                     let neighbor = node.board.neighborAfterSliding(position)
                     // we need to ignore neighbors that are the previous layout
                     if node.previous == nil || neighbor != node.previous!.board {
-                        let newNode = SearchNode(board: neighbor, moves: node.moves + 1, movedPosition: nil, previous: node)
+                        let newNode = SearchNode(board: neighbor, moves: node.moves + 1, movedPosition: position, previous: node)
                         pq.insert(newNode)
                     }
                 }
@@ -73,7 +73,7 @@ struct Solver {
                 for position in node.board.slidablePositions() {
                     let neighbor = node.board.neighborAfterSliding(position)
                     if node.previous == nil || neighbor != node.previous!.board {
-                        let newNode = SearchNode(board: neighbor, moves: node.moves + 1, movedPosition: nil, previous: node)
+                        let newNode = SearchNode(board: neighbor, moves: node.moves + 1, movedPosition: position, previous: node)
                         twinPQ.insert(newNode)
                     }
                 }
