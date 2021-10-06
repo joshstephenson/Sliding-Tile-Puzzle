@@ -64,7 +64,7 @@ struct BoardView: View {
 }
 
 struct ContentView: View {
-    var boardModel = try? Board(filename: "3x3-unsolvable.txt")
+    var boardModel = try? Board(filename: "3x3-01.txt")
     @State var solveIt = true
     var body: some View {
        

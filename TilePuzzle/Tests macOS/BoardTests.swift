@@ -50,7 +50,7 @@ class BoardTests: XCTestCase {
              7  5  8
             """
         var board = try Board(contents: contents)
-        XCTAssertEqual(board.neighbors().count, 4)
+        XCTAssertEqual(board.slidablePositions().count, 4)
         
         contents = """
             3
@@ -59,7 +59,7 @@ class BoardTests: XCTestCase {
              7  5  8
             """
         board = try Board(contents: contents)
-        XCTAssertEqual(board.neighbors().count, 3)
+        XCTAssertEqual(board.slidablePositions().count, 3)
         
         contents = """
             3
@@ -68,7 +68,7 @@ class BoardTests: XCTestCase {
              7  5  8
             """
         board = try Board(contents: contents)
-        XCTAssertEqual(board.neighbors().count, 2)
+        XCTAssertEqual(board.slidablePositions().count, 2)
         
         contents = """
             3
@@ -77,7 +77,7 @@ class BoardTests: XCTestCase {
              7  5  0
             """
         board = try Board(contents: contents)
-        XCTAssertEqual(board.neighbors().count, 2)
+        XCTAssertEqual(board.slidablePositions().count, 2)
     }
     
     func testBasicArrayCopy() throws {
@@ -104,7 +104,7 @@ class BoardTests: XCTestCase {
         
         let board = try Board(contents: initial)
         let _ = board.description
-        let dupe = board.duplicateAfterSliding(2) // slide the 2 over to the right
+        let dupe = board.neighborAfterSliding(2) // slide the 2 over to the right
         XCTAssertEqual(board.slotPosition, 3)
         XCTAssertEqual(dupe.slotPosition, 2)
         let expected = [1,2,0,4,8,3,7,6,5]
@@ -131,7 +131,7 @@ class BoardTests: XCTestCase {
             """
         
         let board = try Board(contents: initial)
-        var neighbor = board.duplicateAfterSliding(6) // slide the 3 up
+        var neighbor = board.neighborAfterSliding(6) // slide the 3 up
         var expected = [1,2,3,4,8,0,7,6,5]
         
         var result1:[Int] = neighbor.description.components(separatedBy: CharacterSet.whitespacesAndNewlines).compactMap { char in
@@ -147,7 +147,7 @@ class BoardTests: XCTestCase {
         }
         
         // NOTE: Still working with the original board
-        neighbor = board.duplicateAfterSliding(2) // slide the 2 over to the right
+        neighbor = board.neighborAfterSliding(2) // slide the 2 over to the right
         expected = [1,0,2,4,8,3,7,6,5]
         
         result1 = neighbor.description.components(separatedBy: CharacterSet.whitespacesAndNewlines).compactMap { char in
@@ -171,9 +171,10 @@ class BoardTests: XCTestCase {
              7  6  5
             """
         let expected1 = [1,0,2,4,8,3,7,6,5]
-        var board = try Board(contents: initial)
-        
-        let result1:[Int] = board.neighbors().first!.description.components(separatedBy: CharacterSet.whitespacesAndNewlines).compactMap { char in
+        let board = try Board(contents: initial)
+        let positions = board.slidablePositions()
+        let neighbor1 = board.neighborAfterSliding(positions.first!)
+        let result1:[Int] = neighbor1.description.components(separatedBy: CharacterSet.whitespacesAndNewlines).compactMap { char in
             if char.isEmpty {
                 return nil
             }
@@ -186,8 +187,9 @@ class BoardTests: XCTestCase {
         }
         XCTAssertEqual(result1.count, 9)
         
+        let neighbor2 = board.neighborAfterSliding(positions.last!)
         let expected2 = [1,2,3,4,8,0,7,6,5]
-        let result2:[Int] = board.neighbors().last!.description.components(separatedBy: CharacterSet.whitespacesAndNewlines).compactMap { char in
+        let result2:[Int] = neighbor2.description.components(separatedBy: CharacterSet.whitespacesAndNewlines).compactMap { char in
             if char.isEmpty {
                 return nil
             }

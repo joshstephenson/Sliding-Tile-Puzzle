@@ -143,7 +143,7 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
     }
     
     func move(position: Int, block: ((Int, Bool) -> Void)? = nil) {
-        if let tile = tileLookup[position], isSlideable(tile: tile) {
+        if let tile = tileLookup[position], isSlidable(tile: tile) {
             let oldPosition     = tile.position
             let oldManhattan    = tile.manhattan
             let oldSlot         = slotPosition
@@ -173,11 +173,10 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         }
     }
     
-    // A neighbor is a board in the current state, but with one tile slid into empty slot
-    // There are always at least 2 neighbors and as many as 4
-    func neighbors() -> [Board] {
+    // An array of positions capable of sliding into the open slot
+    func slidablePositions() -> [Int] {
         assert(slotPosition > 0)
-        var boards:[Board] = []
+        var positions:[Int] = []
         
         let hasLeft     = slotPosition % dimension != 1
         let hasRight    = slotPosition % dimension != 0
@@ -185,19 +184,19 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         let hasBelow    = slotPosition <= dimension * (dimension - 1)
         
         if (hasLeft) {
-            boards.append(duplicateAfterSliding(slotPosition - 1))
+            positions.append(slotPosition - 1)
         }
         if (hasRight) {
-            boards.append(duplicateAfterSliding(slotPosition + 1))
+            positions.append(slotPosition + 1)
         }
         if (hasAbove) {
-            boards.append(duplicateAfterSliding(slotPosition - dimension))
+            positions.append(slotPosition - dimension)
         }
         if (hasBelow) {
-            boards.append(duplicateAfterSliding(slotPosition + dimension))
+            positions.append(slotPosition + dimension)
         }
-        assert(boards.count > 0)
-        return boards
+        assert(positions.count > 0)
+        return positions
     }
     
     // swap any two tiles (non-slot tiles)
@@ -218,18 +217,18 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         return Board(dimension: dimension, tiles: swap, slotPosition: slotPosition)
     }
     
-    func duplicateAfterSliding(_ position: Int) -> Board {
-        return duplicateAfterSliding(tileLookup[position]!)
+    func neighborAfterSliding(_ position: Int) -> Board {
+        return neighborAfterSliding(tileLookup[position]!)
     }
     
-    private func duplicateAfterSliding(_ tile: Tile) -> Board {
+    private func neighborAfterSliding(_ tile: Tile) -> Board {
         let b = Board(dimension: dimension, tiles: tiles, slotPosition: slotPosition)
         b.move(position: tile.position, block: nil)
         return b
     }
     
     // We should only be able to slide tiles adjascent to empty slot
-    private func isSlideable(tile: Tile) -> Bool {
+    private func isSlidable(tile: Tile) -> Bool {
         // slot is in the same row with tile and the adjascent
         if ((tile.position - 1) / dimension == (slotPosition - 1) / dimension) && (abs(tile.position - slotPosition) == 1) {
             return true

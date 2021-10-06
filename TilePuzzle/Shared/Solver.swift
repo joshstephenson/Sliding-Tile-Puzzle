@@ -20,11 +20,12 @@ class SearchNode: Comparable, Equatable, CustomStringConvertible {
     }
     
     public var description: String {
-        return "SearchNode: solved: \(isSolved) priority: \(priority), manhattan: \(manhattan), moves: \(moves), previous: \(previous == nil)"
+        return "SearchNode: solved: \(isSolved) priority: \(priority), manhattan: \(manhattan), moves: \(moves), movedPosition: \(movedPosition), previous: \(previous == nil)"
     }
     
     internal var board: Board
     internal var moves: Int
+    internal var movedPosition: Int?
     internal var previous: SearchNode?
     private var priority:Int
     private var manhattan:Int
@@ -32,9 +33,10 @@ class SearchNode: Comparable, Equatable, CustomStringConvertible {
         return board.isSolved
     }
     
-    init(board: Board, moves: Int, previous: SearchNode?) {
+    init(board: Board, moves: Int, movedPosition: Int?, previous: SearchNode?) {
         self.board = board
         self.moves = moves
+        self.movedPosition = movedPosition
         self.previous = previous
         self.manhattan = board.manhattan
         self.priority = manhattan + moves; // decreasing priority by number of moves
@@ -51,15 +53,16 @@ struct Solver {
         // If a twin board can be solved then the initial (non-twin) cannot be
         var twinPQ = MinimumPriorityQueue<SearchNode>()
         
-        pq.insert(SearchNode(board: initial, moves: 0, previous: nil))
-        twinPQ.insert(SearchNode(board: initial.twin(), moves: 0, previous: nil))
+        pq.insert(SearchNode(board: initial, moves: 0, movedPosition: nil, previous: nil))
+        twinPQ.insert(SearchNode(board: initial.twin(), moves: 0, movedPosition: nil, previous: nil))
 
         while((!pq.isEmpty() && !pq.min()!.isSolved) && (!twinPQ.isEmpty() && !twinPQ.min()!.isSolved)) {
             if let node = pq.delMin() {
-                for neighbor in node.board.neighbors() {
+                for position in node.board.slidablePositions() {
+                    let neighbor = node.board.neighborAfterSliding(position)
                     // we need to ignore neighbors that are the previous layout
                     if node.previous == nil || neighbor != node.previous!.board {
-                        let newNode = SearchNode(board: neighbor, moves: node.moves + 1, previous: node)
+                        let newNode = SearchNode(board: neighbor, moves: node.moves + 1, movedPosition: nil, previous: node)
                         pq.insert(newNode)
                     }
                 }
@@ -67,9 +70,10 @@ struct Solver {
             
             // Now do the same for the twin PQ
             if let node = twinPQ.delMin() {
-                for neighbor in node.board.neighbors() {
+                for position in node.board.slidablePositions() {
+                    let neighbor = node.board.neighborAfterSliding(position)
                     if node.previous == nil || neighbor != node.previous!.board {
-                        let newNode = SearchNode(board: neighbor, moves: node.moves + 1, previous: node)
+                        let newNode = SearchNode(board: neighbor, moves: node.moves + 1, movedPosition: nil, previous: node)
                         twinPQ.insert(newNode)
                     }
                 }
