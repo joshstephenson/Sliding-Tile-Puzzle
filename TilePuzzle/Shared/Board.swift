@@ -36,7 +36,7 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
     // Sum of distances between tiles and goal
     public var manhattan: Int = -1 {
         didSet {
-            let maxManhattan = Double(tiles.count)
+            let maxManhattan = Double(tiles.count)*1.5
             self.progress = hamming == 0 ? 1.0 : 1 - (Double(manhattan) / maxManhattan)
         }
     }

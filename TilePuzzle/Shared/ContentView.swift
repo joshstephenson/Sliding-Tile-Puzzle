@@ -28,7 +28,6 @@ struct BoardTileView: View {
     var boardView: BoardView
     var board: Board
     @ObservedObject var tile: Board.Tile
-//    @State var origin: CGSize
     
     init(boardView: BoardView, tile: Board.Tile) {
         self.boardView = boardView
@@ -71,7 +70,6 @@ struct BoardView: View {
         }
     }
     
-    
     static func offsetForPosition(n: Int, position: Int) -> CGSize {
         let col = CGFloat((position - 1) % n)
         let row = CGFloat((position - 1) / n)
@@ -82,35 +80,47 @@ struct BoardView: View {
 }
 
 struct ContentView: View {
-    var boardModel = try? Board(filename: "3x3-01.txt")
+    @ObservedObject var boardModel = try! Board(filename: "4x4-01.txt")
     var body: some View {
         VStack(alignment: .center, spacing: 5.0) {
             Button("Solve") {
-                boardModel?.solve(with: { solution in
+                boardModel.solve(with: { solution in
                     print("Solved in \(solution.count) steps")
                     if solution.count > 0 {
                         var index = 0.0
                         for position in solution {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15 * index) {
-                                boardModel?.move(position: position)
+                                boardModel.move(position: position)
                             }
                             index += 1
                         }
                     }else{
-                        print("Cannot be solved")
+                        if boardModel.isSolved {
+                            print("Board is already solved")
+                        }else {
+                            print("Board cannot be solved")
+                        }
                     }
                 })
             }
+            Rectangle()
+                .fill(progressColor(boardModel.progress))
+                .frame(minWidth:frameSize())
+                .frame(height:5.0)
             
-            BoardView(model: boardModel!).frame(width: CGFloat(boardModel!.dimension) * BoardConstants.tileSize + CGFloat(boardModel!.dimension - 1) * BoardConstants.spacing, height: CGFloat(boardModel!.dimension) * BoardConstants.tileSize + CGFloat(boardModel!.dimension - 1) * BoardConstants.spacing, alignment: .topLeading)
+            BoardView(model: boardModel).frame(width: frameSize(), height: frameSize(), alignment: .topLeading)
                 .background(Color("Board"))
         }
     }
     
-//    private func progressColor(_ progress: Double) -> Color {
-//        print(progress)
-//        return Color(hue: 0.9, saturation: progress, brightness: 1.0)
-//    }
+    private func frameSize() -> CGFloat {
+        return CGFloat(boardModel.dimension) * BoardConstants.tileSize + CGFloat(boardModel.dimension - 1) * BoardConstants.spacing
+    }
+    
+    private func progressColor(_ progress: Double) -> Color {
+        print(progress)
+        return Color(red: 1 - (progress * 2.0), green: progress, blue: 0.0)
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
