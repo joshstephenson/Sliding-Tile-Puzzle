@@ -25,15 +25,21 @@ struct InnerTile: View {
 }
 
 struct BoardTileView: View {
-    var board: BoardView
-    var tile: Board.Tile
-    @State var origin: CGSize
+    var boardView: BoardView
+    var board: Board
+    @ObservedObject var tile: Board.Tile
+//    @State var origin: CGSize
+    
+    init(boardView: BoardView, tile: Board.Tile) {
+        self.boardView = boardView
+        self.tile = tile
+        self.board = boardView.model
+    }
     var body: some View {
         InnerTile(number: tile.number)
-            .offset(origin)
+            .offset(boardView.offsets[tile.position]!)
             .onTapGesture {
-                board.model.move(position: tile.position) { position, solved in
-                    self.origin = BoardView.offsetForPosition(n: board.model.dimension, position: position)
+                board.move(position: tile.position) { position, solved in
                     if(solved) {
                         print("SOLVED!")
                     }
@@ -45,14 +51,26 @@ struct BoardTileView: View {
 
 struct BoardView: View {
     public var model: Board
+    public var offsets: [Int:CGSize]
+    
+    init(model: Board) {
+        self.model = model
+        var offsets:[Int:CGSize] = [:]
+        for i in 1...(model.dimension * model.dimension) {
+            offsets[i] = BoardView.offsetForPosition(n: model.dimension, position: i)
+        }
+        self.offsets = offsets
+    }
+    
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
             ForEach(model.tiles, id: \.self) { tile in
-                BoardTileView(board: self, tile: tile, origin: BoardView.offsetForPosition(n: model.dimension, position: tile.position))
+                BoardTileView(boardView: self, tile: tile)
                     .background(Color.clear)
             }
         }
     }
+    
     
     static func offsetForPosition(n: Int, position: Int) -> CGSize {
         let col = CGFloat((position - 1) % n)
@@ -65,17 +83,27 @@ struct BoardView: View {
 
 struct ContentView: View {
     var boardModel = try? Board(filename: "3x3-01.txt")
-    @State var solveIt = true
     var body: some View {
-       
         VStack(alignment: .center, spacing: 5.0) {
             Button("Solve") {
-                let solver = Solver(boardModel!)
-                print("solution: \(solver.solution())")
+                boardModel?.solve(with: { solution in
+                    print("Solved in \(solution.count) steps")
+                    if solution.count > 0 {
+                        var index = 0.0
+                        for position in solution {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15 * index) {
+                                boardModel?.move(position: position)
+                            }
+                            index += 1
+                        }
+                    }else{
+                        print("Cannot be solved")
+                    }
+                })
             }
             
             BoardView(model: boardModel!).frame(width: CGFloat(boardModel!.dimension) * BoardConstants.tileSize + CGFloat(boardModel!.dimension - 1) * BoardConstants.spacing, height: CGFloat(boardModel!.dimension) * BoardConstants.tileSize + CGFloat(boardModel!.dimension - 1) * BoardConstants.spacing, alignment: .topLeading)
-                .background(Color("Board"))   
+                .background(Color("Board"))
         }
     }
     

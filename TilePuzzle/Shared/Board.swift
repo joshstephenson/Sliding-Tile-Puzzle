@@ -97,7 +97,6 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         self.tileLookup = l
         processTiles()
     }
-   
     
     // Initialize from a txt file
     convenience init(filename: String) throws {
@@ -140,6 +139,11 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         self.tiles = t
         self.tileLookup = l
         processTiles()
+    }
+    
+    func solve(with block: (([Int]) -> Void)) {
+        let solver = Solver(self)
+        block(solver.solution())
     }
     
     func move(position: Int, block: ((Int, Bool) -> Void)? = nil) {
@@ -254,17 +258,19 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
     }
     
     
-    class Tile: NSObject {
+    class Tile: NSObject, ObservableObject {
         var dimension: Int
         var number: Int
-        var col: Int = -1
-        var row: Int = -1
-        var manhattan: Int = -1
-        var position: Int {
+        @Published var position: Int {
             didSet {
                 updateCalculatedAttributes()
             }
         }
+        
+        var col: Int = -1
+        var row: Int = -1
+        var manhattan: Int = -1
+        
         public override var description: String {
             return "<Tile number: \(number), position: \(position)>"
         }
@@ -293,7 +299,6 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
                 finalRow = (number / dimension) + 1;
             }
             let manhattan = abs(finalRow - row) + abs(finalCol - col)
-    //        print("\(number), row: \(row), col: \(col), finalRow: \(finalRow), finalCol: \(finalCol), manh: \(manhattan)")
             return manhattan
         }
     }
