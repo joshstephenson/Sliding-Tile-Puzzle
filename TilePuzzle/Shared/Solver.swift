@@ -82,7 +82,6 @@ struct Solver {
         }
         
         if let node = pq.delMin() {
-            print(node)
             // if this node isn't solved, then it means the twin was, in which case this is unsolvable
             if node.isSolved {
                 // Now that we know it's solved, build the stack of boards representing
@@ -101,10 +100,8 @@ struct Solver {
                 }
                 boards.append(initial)
             }else {
-                print("board not solvable")
+                print("Board not solvable")
             }
-        } else {
-            print("empty PQ")
         }
     }
     
