@@ -85,7 +85,7 @@ struct ContentView: View {
         VStack(alignment: .center, spacing: 5.0) {
             Button("Solve") {
                 boardModel.solve(with: { solution in
-                    print("Solved in \(solution.count) steps")
+                    print("Board solved in \(solution.count) steps")
                     if solution.count > 0 {
                         var index = 0.0
                         for position in solution {
