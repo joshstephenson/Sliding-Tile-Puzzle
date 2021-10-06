@@ -71,7 +71,7 @@ struct ContentView: View {
         VStack(alignment: .center, spacing: 5.0) {
             Button("Solve") {
                 let solver = Solver(boardModel!)
-                print("moves: \(solver.moves())")
+                print("solution: \(solver.solution())")
             }
             
             BoardView(model: boardModel!).frame(width: CGFloat(boardModel!.dimension) * BoardConstants.tileSize + CGFloat(boardModel!.dimension - 1) * BoardConstants.spacing, height: CGFloat(boardModel!.dimension) * BoardConstants.tileSize + CGFloat(boardModel!.dimension - 1) * BoardConstants.spacing, alignment: .topLeading)
