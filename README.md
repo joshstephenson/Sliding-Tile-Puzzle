@@ -15,7 +15,7 @@ This is by no means an original project, but it was an excuse to learn SwiftUI a
 
 ## Automatic Solving via A* Algorithm
 
-Automatic solver via A* ("A star") algorithm, implemented in [Solver.swift](https://github.com/joshstephenson/Sliding-Tile-Puzzle/blob/main/TilePuzzle/Shared/Solver.swift) leveraging [MinimumPriorityQueue.swift](https://github.com/joshstephenson/Sliding-Tile-Puzzle/blob/main/TilePuzzle/Shared/MinimumPriorityQueue.swift.). 
+Automatic solver employs an [A* ("A star") algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm), implemented in [Solver.swift](https://github.com/joshstephenson/Sliding-Tile-Puzzle/blob/main/TilePuzzle/Shared/Solver.swift) leveraging [MinimumPriorityQueue.swift](https://github.com/joshstephenson/Sliding-Tile-Puzzle/blob/main/TilePuzzle/Shared/MinimumPriorityQueue.swift.). 
 
 
 ## About the binary heap
