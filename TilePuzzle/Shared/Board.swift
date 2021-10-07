@@ -240,7 +240,7 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         
         var positions = positions
         let next = positions.removeFirst()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + AnimationConstants.delayWhileSolving) {
             self.move(position: next)
             self.solve(positions)
         }
@@ -259,8 +259,8 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         let lastSlot = self.slotPosition
         self.move(position: possibleMoves[chosenIndex])
         
-        if hamming < dimension * (dimension - Int(sqrt(Double(dimension)))) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+        if Double(hamming) < Double(dimension * dimension) * BoardConstants.randomPercent {
+            DispatchQueue.main.asyncAfter(deadline: .now() + AnimationConstants.delayWhileSolving) {
                 self.randomize(lastSlot)
             }
         }

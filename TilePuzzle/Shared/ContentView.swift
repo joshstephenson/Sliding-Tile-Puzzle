@@ -10,7 +10,7 @@ import Combine
 
 extension Animation {
     static func slide() -> Animation {
-        Animation.easeOut(duration: 0.1)
+        Animation.easeOut(duration: AnimationConstants.slideAnimationDuration)
     }
 }
 
