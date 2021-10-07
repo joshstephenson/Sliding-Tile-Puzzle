@@ -19,6 +19,7 @@ struct InnerTile: View {
     var body: some View {
         Text("\(number)")
             .font(Font.custom("HelveticaNeue-Light", size: 28.0))
+            .foregroundColor(Color.black)
             .frame(width: CGFloat(BoardConstants.tileSize), height: CGFloat(BoardConstants.tileSize), alignment: .center)
             .background(Color("Tile"))
             .cornerRadius(5.0)
@@ -74,8 +75,8 @@ struct BoardView: View {
     static func offsetForPosition(n: Int, position: Int) -> CGSize {
         let col = CGFloat((position - 1) % n)
         let row = CGFloat((position - 1) / n)
-        return CGSize(width: col * BoardConstants.tileSize + (col - 1) * BoardConstants.spacing,
-                      height: row * BoardConstants.tileSize + (row - 1) * BoardConstants.spacing)
+        return CGSize(width: col * BoardConstants.tileSize + (col - 1) * BoardConstants.spacing + 6.0,
+                      height: row * BoardConstants.tileSize + (row - 1) * BoardConstants.spacing + 6.0)
     }
     
 }
@@ -108,7 +109,7 @@ struct ContentView: View {
     }
     
     private func frameSize() -> CGFloat {
-        return CGFloat(boardModel.dimension) * BoardConstants.tileSize + CGFloat(boardModel.dimension - 1) * BoardConstants.spacing
+        return CGFloat(boardModel.dimension) * BoardConstants.tileSize + CGFloat(boardModel.dimension - 1) * BoardConstants.spacing + 6.0
     }
     
     private func progressColor(_ progress: Double) -> Color {

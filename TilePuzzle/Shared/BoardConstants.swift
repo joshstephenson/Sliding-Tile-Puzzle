@@ -9,6 +9,5 @@ import Foundation
 
 struct BoardConstants {
     static let tileSize:CGFloat = 70.0
-    static let boardSize = 4
-    static let spacing:CGFloat = 2.0
+    static let spacing:CGFloat = 3.0
 }
