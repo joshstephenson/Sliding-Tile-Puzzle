@@ -81,7 +81,7 @@ struct BoardView: View {
 }
 
 struct ContentView: View {
-    @ObservedObject var boardModel = Board(dimension: 7)
+    @ObservedObject var boardModel = Board(dimension: 4)
     var body: some View {
         VStack(alignment: .leading, spacing: 5.0) {
             HStack(alignment: .top, spacing: 5.0) {
