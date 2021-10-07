@@ -4,7 +4,7 @@
 
 ## About
 
-This is by no means an original project, but it was an excuse to learn SwiftUI a bit more, as well as an excuse to build a binary heap and priority queue, which I hadn't done before. Building a binary heap is probably not a great idea for a production worthy app, as you could most likely find one, but it is a very simple data structure when backed by an array (See [MinimumPriorityQueue.swift](https://github.com/joshstephenson/Sliding-Tile-Puzzle/blob/main/TilePuzzle/Shared/MinimumPriorityQueue.swift.)) Priority Queues are a common data structure for solving games where efficiency of moves is important. In the case of a sliding tile puzzle, it can be solved with many sets of moves, but using a minimum priority queue ensures you identify the set of fewest moves in order to solve.
+This is by no means an original project, but it was an excuse to learn SwiftUI a bit more, as well as an excuse to build a binary heap and priority queue, which I hadn't done before. Building a binary heap is probably not a great idea for a production worthy app, as you could most likely find one, but it is a very simple data structure when backed by an array (See [MinimumPriorityQueue.swift](https://github.com/joshstephenson/Sliding-Tile-Puzzle/blob/main/TilePuzzle/Shared/MinimumPriorityQueue.swift.)). Priority queues are a common data structure for solving games where efficiency of moves is important. In the case of a sliding tile puzzle, it can be solved with many sets of moves, but using a minimum priority queue ensures you identify the set of fewest moves in order to solve.
 
 ## This project can:
 
