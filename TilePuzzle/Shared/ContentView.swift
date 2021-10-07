@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 extension Animation {
     static func slide() -> Animation {
@@ -80,34 +81,27 @@ struct BoardView: View {
 }
 
 struct ContentView: View {
-    @ObservedObject var boardModel = try! Board(filename: "4x4-01.txt")
+    @ObservedObject var boardModel = Board(dimension: 7)
     var body: some View {
-        VStack(alignment: .center, spacing: 5.0) {
-            Button("Solve") {
-                boardModel.solve(with: { solution in
-                    print("Board solved in \(solution.count) steps")
-                    if solution.count > 0 {
-                        var index = 0.0
-                        for position in solution {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15 * index) {
-                                boardModel.move(position: position)
-                            }
-                            index += 1
-                        }
+        VStack(alignment: .leading, spacing: 5.0) {
+            HStack(alignment: .top, spacing: 5.0) {
+                Button("Solve") {
+                    if boardModel.isSolved {
+                        print("Board is already solved")
+                        
                     }else{
-                        if boardModel.isSolved {
-                            print("Board is already solved")
-                        }else {
-                            print("Board cannot be solved")
-                        }
+                        boardModel.solve()
                     }
-                })
-            }
-            Rectangle()
-                .fill(progressColor(boardModel.progress))
-                .frame(minWidth:frameSize())
-                .frame(height:5.0)
+                }
+                Button("Randomize") {
+                    boardModel.randomize()
+                }
+            }.padding(EdgeInsets(top: 10.0, leading: 5.0, bottom: 5.0, trailing: 5.0))
             
+//            Rectangle()
+//                .fill(progressColor(boardModel.progress))
+//                .frame(maxWidth:CGFloat(boardModel.progress) * frameSize())
+//                .frame(height:5.0)
             BoardView(model: boardModel).frame(width: frameSize(), height: frameSize(), alignment: .topLeading)
                 .background(Color("Board"))
         }
@@ -118,8 +112,7 @@ struct ContentView: View {
     }
     
     private func progressColor(_ progress: Double) -> Color {
-        print(progress)
-        return Color(red: 1 - (progress * 2.0), green: progress, blue: 0.0)
+        return Color(red: 0.0, green: 1.0, blue: 0.0)
     }
 }
 

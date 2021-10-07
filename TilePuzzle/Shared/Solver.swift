@@ -20,7 +20,7 @@ class SearchNode: Comparable, Equatable, CustomStringConvertible {
     }
     
     public var description: String {
-        return "SearchNode: solved: \(isSolved) priority: \(priority), manhattan: \(manhattan), moves: \(moves), movedPosition: \(movedPosition), previous: \(previous == nil)"
+        return "SearchNode: solved: \(isSolved) priority: \(priority), manhattan: \(manhattan), moves: \(moves), movedPosition: \(movedPosition!), previous: \(previous == nil)"
     }
     
     internal var board: Board

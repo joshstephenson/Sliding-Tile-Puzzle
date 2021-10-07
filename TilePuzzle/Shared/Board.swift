@@ -31,15 +31,14 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
     @Published var progress: Double = 1.0
     
     // A measure of how many tiles are out of place
-    private var hamming: Int = -1
-    
-    // Sum of distances between tiles and goal
-    public var manhattan: Int = -1 {
+    private var hamming: Int = -1 {
         didSet {
-            let maxManhattan = Double(tiles.count)*1.5
-            self.progress = hamming == 0 ? 1.0 : 1 - (Double(manhattan) / maxManhattan)
+            self.progress = hamming == 0 ? 1.0 : max(1 - (Double(hamming) / Double(tiles.count)), 0.0)
         }
     }
+    
+    // Sum of distances between tiles and goal
+    public var manhattan: Int = -1
     
     private var tileLookup:[Int:Tile] = [:]
     
@@ -141,9 +140,13 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         processTiles()
     }
     
-    func solve(with block: (([Int]) -> Void)) {
+    func solve() {
         let solver = Solver(self)
-        block(solver.solution())
+        solve(solver.solution())
+    }
+    
+    func randomize() {
+        randomize(-1)
     }
     
     func move(position: Int, block: ((Int, Bool) -> Void)? = nil) {
@@ -229,6 +232,38 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         let b = Board(dimension: dimension, tiles: tiles, slotPosition: slotPosition)
         b.move(position: tile.position, block: nil)
         return b
+    }
+    
+    // Recursive function to facilitate UI delay
+    private func solve(_ positions: [Int]) {
+        if positions.count == 0 { return }
+        
+        var positions = positions
+        let next = positions.removeFirst()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+            self.move(position: next)
+            self.solve(positions)
+        }
+    }
+    
+    // Recursive function to facilitate UI delay
+    private func randomize(_ lastSlot: Int) {
+        var possibleMoves = self.slidablePositions()
+        
+        // don't allow a tile to slide right back where it was
+        if let indexOfLastSlot = possibleMoves.firstIndex(of: lastSlot) {
+            possibleMoves.remove(at: indexOfLastSlot)
+        }
+        
+        let chosenIndex = Int.random(in: 0..<possibleMoves.count)
+        let lastSlot = self.slotPosition
+        self.move(position: possibleMoves[chosenIndex])
+        
+        if hamming < dimension * (dimension - Int(sqrt(Double(dimension)))) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                self.randomize(lastSlot)
+            }
+        }
     }
     
     // We should only be able to slide tiles adjascent to empty slot
