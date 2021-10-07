@@ -18,7 +18,7 @@ struct InnerTile: View {
     var number: Int
     var body: some View {
         Text("\(number)")
-            .font(.largeTitle)
+            .font(Font.custom("HelveticaNeue-Light", size: 28.0))
             .frame(width: CGFloat(BoardConstants.tileSize), height: CGFloat(BoardConstants.tileSize), alignment: .center)
             .background(Color("Tile"))
             .cornerRadius(5.0)
