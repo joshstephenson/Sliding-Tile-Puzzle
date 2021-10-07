@@ -49,6 +49,75 @@ struct Solver {
     private var isSolvable = false
     
     init(_ initial: Board) {
+        guard let node = solve(initial) else {
+            print("Board not solvable")
+            return
+        }
+        // if this node isn't solved, then it means the twin was, in which case this is unsolvable
+        if node.isSolved {
+            // Now that we know it's solved, build the stack of boards representing
+            // the steps to solve
+            var goalNode = node
+            self.boards = []
+            self.steps = []
+            isSolvable = true
+            while (goalNode.previous != nil) {
+                let previous = goalNode.previous!
+                boards.append(goalNode.board)
+                if let position = goalNode.movedPosition {
+                    steps.insert(position, at: 0)
+                }
+                goalNode = previous
+            }
+            boards.append(initial)
+        }else {
+            print("Board not solvable")
+        }
+    }
+    
+    public func solution() -> [Int] {
+        return steps
+    }
+    
+    public func moves() -> Int {
+        if isSolvable {
+            return boards.count - 1
+        }else {
+            return -1
+        }
+    }
+    
+    // This assumes a board can be solved. If it was randomized from a solved layout
+    // then it can be solved. If a tile was swapped with another tile (via board.twin())
+    // then it cannot be solved. Use checkIfSolvable() if you're not sure.
+    private func solve(_ initial: Board) -> SearchNode? {
+        var pq = MinimumPriorityQueue<SearchNode>()
+        
+        pq.insert(SearchNode(board: initial, moves: 0, movedPosition: nil, previous: nil))
+
+        while (!pq.isEmpty() && !pq.min()!.isSolved) {
+            if let node = pq.delMin() {
+                for position in node.board.slidablePositions() {
+                    let neighbor = node.board.neighborAfterSliding(position)
+                    // we need to ignore neighbors that are the previous layout
+                    if node.previous == nil || neighbor != node.previous!.board {
+                        let newNode = SearchNode(board: neighbor, moves: node.moves + 1, movedPosition: position, previous: node)
+                        pq.insert(newNode)
+                    }
+                }
+            }
+        }
+        if let node = pq.delMin() {
+            return node
+        }
+        return nil
+    }
+    
+    // This runs a PQ in both directions:
+    // - one assuming it can be solved
+    // the other assuming it can't be
+    // WARNING: This is costly and runs significantly slower than if you know a board can be solved
+    private func checkIfSolvable(_ initial: Board) -> Bool {
         var pq = MinimumPriorityQueue<SearchNode>()
         // TwinPQ is used to determine if a board can be solved
         // If a twin board can be solved then the initial (non-twin) cannot be
@@ -82,38 +151,8 @@ struct Solver {
         }
         
         if let node = pq.delMin() {
-            // if this node isn't solved, then it means the twin was, in which case this is unsolvable
-            if node.isSolved {
-                // Now that we know it's solved, build the stack of boards representing
-                // the steps to solve
-                var goalNode = node
-                self.boards = []
-                self.steps = []
-                isSolvable = true
-                while (goalNode.previous != nil) {
-                    let previous = goalNode.previous!
-                    boards.append(goalNode.board)
-                    if let position = goalNode.movedPosition {
-                        steps.insert(position, at: 0)
-                    }
-                    goalNode = previous
-                }
-                boards.append(initial)
-            }else {
-                print("Board not solvable")
-            }
+            return node.isSolved
         }
-    }
-    
-    public func solution() -> [Int] {
-        return steps
-    }
-    
-    public func moves() -> Int {
-        if isSolvable {
-            return boards.count - 1
-        }else {
-            return -1
-        }
+        return false
     }
 }
