@@ -140,13 +140,15 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         processTiles()
     }
     
-    func solve() {
-        let solver = Solver(self)
-        solve(solver.solution())
+    func solve(_ callback: @escaping (() -> Void)) {
+        DispatchQueue.global().async {
+            let solver = Solver(self)
+            self.solve(solver.solution(), callback: callback)
+        }
     }
     
-    func randomize() {
-        randomize(-1)
+    func randomize(_ callback: @escaping (() -> Void)) {
+        randomize(-1, callback: callback)
     }
     
     func move(position: Int, block: ((Int, Bool) -> Void)? = nil) {
@@ -235,19 +237,24 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
     }
     
     // Recursive function to facilitate UI delay
-    private func solve(_ positions: [Int]) {
-        if positions.count == 0 { return }
+    private func solve(_ positions: [Int], callback: @escaping (() -> Void)) {
+        if positions.count == 0 {
+            DispatchQueue.main.async {
+                callback()
+            }
+            return
+        }
         
         var positions = positions
         let next = positions.removeFirst()
         DispatchQueue.main.asyncAfter(deadline: .now() + AnimationConstants.delayWhileSolving) {
             self.move(position: next)
-            self.solve(positions)
+            self.solve(positions, callback: callback)
         }
     }
     
     // Recursive function to facilitate UI delay
-    private func randomize(_ lastSlot: Int) {
+    private func randomize(_ lastSlot: Int, callback: @escaping (() -> Void)) {
         var possibleMoves = self.slidablePositions()
         
         // don't allow a tile to slide right back where it was
@@ -261,8 +268,10 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         
         if Double(hamming) < Double(dimension * dimension) * BoardConstants.randomPercent {
             DispatchQueue.main.asyncAfter(deadline: .now() + AnimationConstants.delayWhileSolving) {
-                self.randomize(lastSlot)
+                self.randomize(lastSlot, callback: callback)
             }
+        }else {
+            callback()
         }
     }
     
