@@ -8,6 +8,20 @@
 import Foundation
 
 class Board: ObservableObject, Equatable, CustomStringConvertible {
+    
+    enum State {
+        case solved
+        case unsolved
+        case randomizing
+        case solving
+        
+        var isBusy: Bool {
+            return self == .solving || self == .randomizing
+        }
+    }
+    
+    @Published private(set) var state = State.solved
+    
     static func == (lhs: Board, rhs: Board) -> Bool {
         return lhs.dimension == rhs.dimension
             && lhs.slotPosition == rhs.slotPosition
@@ -25,7 +39,7 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
     
     // is Solved?
     public var isSolved:Bool {
-        return hamming == 0
+        return self.state == .solved && hamming == 0
     }
     
     @Published var progress: Double = 1.0
@@ -141,6 +155,9 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
     }
     
     func solve(_ callback: @escaping (() -> Void)) {
+        DispatchQueue.main.async {
+            self.state = .solving
+        }
         DispatchQueue.global().async {
             let solver = Solver(self)
             self.solve(solver.solution(), callback: callback)
@@ -148,6 +165,7 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
     }
     
     func randomize(_ callback: @escaping (() -> Void)) {
+        self.state = .randomizing
         randomize(-1, callback: callback)
     }
     
@@ -236,10 +254,11 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
         return b
     }
     
-    // Recursive function to facilitate UI delay
+    // Recursive function to facilitate UI delay while solving
     private func solve(_ positions: [Int], callback: @escaping (() -> Void)) {
         if positions.count == 0 {
             DispatchQueue.main.async {
+                self.state = .solved
                 callback()
             }
             return
@@ -271,6 +290,7 @@ class Board: ObservableObject, Equatable, CustomStringConvertible {
                 self.randomize(lastSlot, callback: callback)
             }
         }else {
+            self.state = .unsolved
             callback()
         }
     }

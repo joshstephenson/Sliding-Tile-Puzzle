@@ -11,7 +11,7 @@ import SwiftUI
 struct TilePuzzleApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(Board(dimension: 4))
         }
     }
 }

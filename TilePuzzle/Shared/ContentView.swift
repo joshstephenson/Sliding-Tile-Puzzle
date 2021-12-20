@@ -112,45 +112,44 @@ struct PuzzleButton: View {
 }
 
 struct ContentView: View {
-    @ObservedObject var boardModel = Board(dimension: 4)
-    @State var isActive: Bool = false
+    @EnvironmentObject var boardModel: Board
     var body: some View {
         VStack(alignment: .center, spacing: 5.0) {
-            if !isActive {
+            header
+            
+            Spacer().frame(height:2.0)
+            BoardView(model: boardModel).frame(width: frameSize(), height: frameSize(), alignment: .topLeading)
+                
+        }.background(Color("Board"))
+    }
+    
+    private var header: some View {
+        if boardModel.state.isBusy {
+            return AnyView(VStack() {
+                Spacer().frame(height:10.0)
+                ProgressView()
+                    .colorScheme(.dark)
+                    .frame(maxHeight:20.0)
+            })
+        }else {
+            return AnyView(VStack() {
                 Spacer().frame(height:8.0)
                 HStack(alignment: .center, spacing: 20.0) {
                     PuzzleButton(label: "Randomize") {
-                        self.isActive = true
                         self.boardModel.randomize() {
-                            self.isActive = false
                         }
                     }
                     PuzzleButton(label: "Solve") {
                         if boardModel.isSolved {
                             print("Board is already solved")
                         }else{
-                            self.isActive = true
                             boardModel.solve() {
-                                self.isActive = false
                             }
                         }
                     }
                 }
-            }else {
-                Spacer().frame(height:10.0)
-                ProgressView()
-                    .colorScheme(.dark)
-                    .frame(maxHeight:20.0)
-            }
-            
-            Spacer().frame(height:2.0)
-//            Rectangle()
-//                .fill(progressColor(boardModel.progress))
-//                .frame(maxWidth:CGFloat(boardModel.progress) * frameSize())
-//                .frame(height:5.0)
-            BoardView(model: boardModel).frame(width: frameSize(), height: frameSize(), alignment: .topLeading)
-                
-        }.background(Color("Board"))
+            })
+        }
     }
     
     private func frameSize() -> CGFloat {
