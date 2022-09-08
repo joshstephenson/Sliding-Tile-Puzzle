@@ -34,7 +34,7 @@ Therefore, to determine if a board is solvable, you can swap any two tiles (not 
 
 Automatic solver employs an [A* ("A star") algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm), implemented in [Solver.swift](https://github.com/joshstephenson/Sliding-Tile-Puzzle/blob/main/TilePuzzle/Shared/Solver.swift) leveraging [MinimumPriorityQueue.swift](https://github.com/joshstephenson/Sliding-Tile-Puzzle/blob/main/TilePuzzle/Shared/MinimumPriorityQueue.swift.). 
 
-This method is still quite slow for some randomized layouts. I'm honestly not certain yet if that indicates a problem or not.
+This method is still quite slow for some large randomized layouts. I'm honestly not certain yet if that indicates a problem or not, but it probably does.
 
 ## About the binary heap
 The binary heap is a simple array where a child is always at `2 * i + 1` and a parent is always at `(i - 1) / 2`. It is a minimum priority queue which means the first element is always the smallest. When a new item is inserted, it is placed at the end of the array and it _swims up_ to its proper position (see `swim()` function). When a minimum item is removed, then the item from the end of the array (lowest priority) is put in its placed and it _sinks down_ to its proper position (see `sink()` function). In this case the items put into the priority queue are `SearchNode` objects which store a reference to a board,  total number of moves to get to that board state, and the last move to get to that state. Each board represents an optional move. Search nodes have a priority (that is minimized in the queue) which is an aggregate of the number of moves taken to get there from the original board state and the board's manhattan value.
